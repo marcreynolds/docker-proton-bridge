@@ -1,0 +1,15 @@
+services:
+  bridge:
+    build: .
+    image: proton-bridge
+    container_name: proton-bridge
+    ports:
+      # Set BIND_ADDR to the host's Tailscale IP to keep these off other interfaces.
+      - "${BIND_ADDR:-0.0.0.0}:143:143"
+      - "${BIND_ADDR:-0.0.0.0}:25:25"
+    volumes:
+      - bridge-data:/data
+    restart: unless-stopped
+
+volumes:
+  bridge-data:
